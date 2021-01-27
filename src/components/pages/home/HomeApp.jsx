@@ -11,6 +11,9 @@ import {
 
 import { useUserDataContext } from 'contexts';
 import { Container } from './style';
+import { PrimaryButton } from 'components/common/Buttons';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'components/common';
 
 const StyledTableCell = withStyles({
     root: {
@@ -42,11 +45,22 @@ const useStyles = makeStyles({
 });
 
 export function HomeApp() {
-    const { userData } = useUserDataContext();
+    const { userData, isLoggedIn } = useUserDataContext();
+    const navigate = useNavigate();
     const classes = useStyles();
 
     return (
         <Container>
+            {!isLoggedIn && (
+                <PrimaryButton onClick={() => navigate(ROUTES.LOGIN)}>
+                    Go to Login
+                </PrimaryButton>
+            )}
+            {isLoggedIn && (
+                <PrimaryButton onClick={() => navigate(ROUTES.LOGOUT)}>
+                    Go to Logout
+                </PrimaryButton>
+            )}
             {userData.length !== 0 && (
                 <Table className={classes.table} aria-label='simple table'>
                     <TableHead>
