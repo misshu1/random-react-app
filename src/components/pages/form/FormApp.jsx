@@ -7,6 +7,7 @@ import { TextField } from '@material-ui/core';
 import { asyncLocalStorage, ROUTES } from 'components/common';
 import { Form } from 'components/pages/form/style';
 import { PrimaryButton } from 'components/common/Buttons';
+import { useUserDataContext } from 'contexts';
 
 const validationSchema = yup.object().shape({
     email: yup.string().email('Invalid email!').required('Email is required!'),
@@ -20,6 +21,7 @@ const validationSchema = yup.object().shape({
 
 export function FormApp() {
     const [isLoggedIn, setIsLoggedIn] = useState(null);
+    const { updateUserData } = useUserDataContext();
     const navigate = useNavigate();
     const {
         errors,
@@ -54,6 +56,7 @@ export function FormApp() {
             newData = data ? [...JSON.parse(data), values] : [values];
         });
         await asyncLocalStorage.setItem('data', JSON.stringify(newData));
+        updateUserData(newData);
         resetForm();
         navigate(ROUTES.ROOT);
     };
@@ -84,7 +87,7 @@ export function FormApp() {
                 id='email'
                 placeholder='john_doe@gmail.com'
                 required
-                error={errors.email}
+                error={!!errors.email}
                 helperText={touched.email && errors.email}
                 margin='normal'
             />
@@ -102,7 +105,7 @@ export function FormApp() {
                 max={new Date().getFullYear()}
                 step='1'
                 required
-                error={errors.year}
+                error={!!errors.year}
                 helperText={touched.year && errors.year}
                 margin='normal'
             />
