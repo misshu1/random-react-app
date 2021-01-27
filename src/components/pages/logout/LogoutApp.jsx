@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { asyncLocalStorage, ROUTES } from 'components/common';
+import { PrimaryButton } from 'components/common/Buttons';
 
 export function LogoutApp() {
     const navigate = useNavigate();
@@ -13,8 +14,12 @@ export function LogoutApp() {
     };
 
     return (
-        <div>
-            <button onClick={handleLogout}>Logout</button>
-        </div>
+        <PrimaryButton
+            aria-label='logout'
+            onClick={handleLogout}
+            fontIcon={['fas', 'power-off']}
+        >
+            Logout
+        </PrimaryButton>
     );
 }
