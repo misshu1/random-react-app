@@ -1,5 +1,11 @@
-function App() {
-  return <div>ceva</div>;
-}
+import React from 'react';
 
-export default App;
+import { RoutesApp } from 'components/routes/Routes';
+
+export function App() {
+    return (
+        <>
+            <RoutesApp />
+        </>
+    );
+}
